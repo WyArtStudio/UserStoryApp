@@ -6,10 +6,12 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.wahyuhw.userstoryapp.data.network.ApiInterface
+import com.wahyuhw.userstoryapp.data.params.StoryPagedParameter
 import com.wahyuhw.userstoryapp.data.prefs.SettingsPreferences
 import com.wahyuhw.userstoryapp.data.response.StoryItem
 import com.wahyuhw.userstoryapp.data.room.StoryDatabase
 import com.wahyuhw.userstoryapp.utils.addBearerToken
+import com.wahyuhw.userstoryapp.utils.map
 import kotlinx.coroutines.flow.first
 
 @OptIn(ExperimentalPagingApi::class)
@@ -47,7 +49,8 @@ class StoryRemoteMediator(
 
         try {
             val token = prefs.getTokenSetting().first()
-            val responseData = apiService.getStory(token!!.addBearerToken())
+            val storyParameter = StoryPagedParameter(page, state.config.pageSize)
+            val responseData = apiService.getStory(token!!.addBearerToken(), storyParameter.map())
             val endOfPaginationReached = responseData.isEmpty()
 
             database.withTransaction {

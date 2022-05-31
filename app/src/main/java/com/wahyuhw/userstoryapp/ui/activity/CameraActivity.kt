@@ -13,10 +13,10 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 import com.wahyuhw.userstoryapp.databinding.ActivityCameraBinding
 import com.wahyuhw.userstoryapp.utils.createFile
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class CameraActivity : AppCompatActivity() {
     private var _binding: ActivityCameraBinding? = null

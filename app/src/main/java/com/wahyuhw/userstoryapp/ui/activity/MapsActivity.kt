@@ -4,14 +4,14 @@ import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
 import android.content.res.Resources
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
+import android.widget.PopupMenu
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
@@ -55,6 +55,26 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ResponseCallback<L
         mapFragment.getMapAsync(this)
 
         loadData()
+
+        binding.menuButton.setOnClickListener {
+            setupMenu()
+        }
+    }
+
+    private fun setupMenu() {
+        val popupMenu = PopupMenu(this@MapsActivity, binding.menuButton)
+        popupMenu.menuInflater.inflate(R.menu.pop_menu_maps, popupMenu.menu)
+
+        popupMenu.setOnMenuItemClickListener { item ->
+            when (item.order) {
+                1 -> mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                2 -> mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                3 -> mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+                4 -> mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+            }
+
+            false
+        }
     }
 
     /**
@@ -87,35 +107,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ResponseCallback<L
 
         getMyLocation()
         setMapStyle()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.map_options, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.normal_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-                true
-            }
-            R.id.satellite_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-                true
-            }
-            R.id.terrain_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-                true
-            }
-            R.id.hybrid_type -> {
-                mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
     }
 
     private fun loadData() {
@@ -165,15 +156,18 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ResponseCallback<L
     override fun onSuccess(data: List<StoryItem>) {
         binding.progressBar.visibility = gone
         if (data.isNotEmpty()) {
-            for (story in data) {
-                val position = LatLng(story.lat as Double, story.lon as Double)
+            for ((position, story) in data.withIndex()) {
+                val coordinates = LatLng(story.lat as Double, story.lon as Double)
                 val title = story.description
                 // Marker Options
                 mMap.addMarker(MarkerOptions()
-                    .position(position)
+                    .position(coordinates)
                     .title(title)
                     .icon(vectorToBitmap(R.drawable.ic_marker,
                         ContextCompat.getColor(this@MapsActivity, R.color.colorBlueSky), resources)))
+                if (position == 0) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(coordinates))
+                }
             }
         }
     }

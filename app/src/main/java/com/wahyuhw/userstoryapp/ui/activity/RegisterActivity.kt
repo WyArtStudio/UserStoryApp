@@ -1,9 +1,8 @@
 package com.wahyuhw.userstoryapp.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.wahyuhw.userstoryapp.data.network.ResponseCallback
 import com.wahyuhw.userstoryapp.data.network.ResponseResource
 import com.wahyuhw.userstoryapp.data.response.ApiResponse

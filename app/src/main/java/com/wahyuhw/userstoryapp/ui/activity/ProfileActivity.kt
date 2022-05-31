@@ -6,14 +6,12 @@ import android.provider.Settings
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.wahyuhw.userstoryapp.R
 import com.wahyuhw.userstoryapp.data.network.ResponseCallback
 import com.wahyuhw.userstoryapp.data.network.ResponseResource
 import com.wahyuhw.userstoryapp.data.room.UserEntity
 import com.wahyuhw.userstoryapp.databinding.ActivityProfileBinding
 import com.wahyuhw.userstoryapp.utils.showLongToast
-import com.wahyuhw.userstoryapp.utils.vectorToBitmap
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModel
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.CoroutineScope

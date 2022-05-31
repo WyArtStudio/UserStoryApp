@@ -1,8 +1,8 @@
 package com.wahyuhw.userstoryapp.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.wahyuhw.userstoryapp.R
 import com.wahyuhw.userstoryapp.data.network.ResponseCallback

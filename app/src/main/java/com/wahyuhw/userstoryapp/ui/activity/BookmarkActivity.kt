@@ -1,14 +1,13 @@
 package com.wahyuhw.userstoryapp.ui.activity
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.wahyuhw.userstoryapp.R
 import com.wahyuhw.userstoryapp.data.network.ResponseCallback
 import com.wahyuhw.userstoryapp.data.network.ResponseResource
-import com.wahyuhw.userstoryapp.data.response.StoryItem
 import com.wahyuhw.userstoryapp.data.room.BookmarkStoryEntity
 import com.wahyuhw.userstoryapp.databinding.ActivityBookmarkBinding
 import com.wahyuhw.userstoryapp.ui.adapter.ListBookmarkAdapter

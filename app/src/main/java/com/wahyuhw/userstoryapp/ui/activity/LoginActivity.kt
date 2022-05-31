@@ -1,14 +1,13 @@
 package com.wahyuhw.userstoryapp.ui.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityOptionsCompat
-import androidx.lifecycle.ViewModelProvider
 import com.wahyuhw.userstoryapp.R
 import com.wahyuhw.userstoryapp.data.network.ResponseCallback
 import com.wahyuhw.userstoryapp.data.network.ResponseResource
@@ -84,9 +83,9 @@ class LoginActivity : AppCompatActivity(), ResponseCallback<LoginResponse> {
         }
 
         val intent = Intent(applicationContext, MainActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
         finish()
-        finishAffinity()
     }
 
     override fun onLoading() {

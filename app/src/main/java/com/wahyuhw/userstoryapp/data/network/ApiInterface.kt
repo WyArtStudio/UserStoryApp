@@ -1,7 +1,7 @@
 package com.wahyuhw.userstoryapp.data.network
 
-import com.wahyuhw.userstoryapp.data.response.LoginResponse
 import com.wahyuhw.userstoryapp.data.response.ApiResponse
+import com.wahyuhw.userstoryapp.data.response.LoginResponse
 import com.wahyuhw.userstoryapp.data.response.StoryItem
 import com.wahyuhw.userstoryapp.data.response.StoryResponse
 import okhttp3.MultipartBody
@@ -25,10 +25,10 @@ interface ApiInterface {
         @Part file: MultipartBody.Part,
     ): Call<ApiResponse>
 
-    // TODO: Check return type
     @GET("stories")
     fun getStory(
-        @Header("Authorization") token: String
+        @Header("Authorization") token: String,
+        @QueryMap query: Map<String, Int>
     ): List<StoryItem>
 
     @GET("stories?location=1")

@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.wahyuhw.userstoryapp.data.response.StoryItem
 import com.wahyuhw.userstoryapp.data.room.BookmarkStoryEntity
 import com.wahyuhw.userstoryapp.databinding.ItemStoryBinding
 import com.wahyuhw.userstoryapp.ui.activity.DetailActivity
@@ -54,7 +53,7 @@ class ListBookmarkAdapter:
         }
 
         override fun areContentsTheSame(oldItem: BookmarkStoryEntity, newItem: BookmarkStoryEntity): Boolean {
-            return oldItem.description == newItem.description
+            return oldItem == newItem
         }
     }
 }

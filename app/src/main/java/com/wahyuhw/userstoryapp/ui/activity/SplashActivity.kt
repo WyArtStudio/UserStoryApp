@@ -2,12 +2,11 @@ package com.wahyuhw.userstoryapp.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.wahyuhw.userstoryapp.databinding.ActivitySplashBinding
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModel
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModelFactory
@@ -44,9 +43,11 @@ class SplashActivity : AppCompatActivity() {
             delay(SPLASH_DURATION)
             session.collect { isAlreadyLogged ->
                 if (isAlreadyLogged == true && token.first()!!.isNotEmpty()) {
-                    startActivity(Intent(applicationContext, MainActivity::class.java))
+                    startActivity(Intent(applicationContext, MainActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
                 } else {
-                    startActivity(Intent(applicationContext, LoginActivity::class.java))
+                    startActivity(Intent(applicationContext, LoginActivity::class.java)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
                 }
                 finish()
             }

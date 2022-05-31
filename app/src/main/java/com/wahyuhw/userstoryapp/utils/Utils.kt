@@ -23,6 +23,7 @@ import com.wahyuhw.userstoryapp.R
 import com.wahyuhw.userstoryapp.data.params.AddStoryParameter
 import com.wahyuhw.userstoryapp.data.params.LoginParameter
 import com.wahyuhw.userstoryapp.data.params.RegisterParameter
+import com.wahyuhw.userstoryapp.data.params.StoryPagedParameter
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
@@ -125,6 +126,12 @@ fun AddStoryParameter.map(): Map<String, RequestBody> =
             this["lat"] = this@map.lat.toString().toRequestBody("text/plain".toMediaType())
             this["lon"] = this@map.lon.toString().toRequestBody("text/plain".toMediaType())
         }
+    }
+
+fun StoryPagedParameter.map(): Map<String, Int> =
+    mutableMapOf<String, Int>().apply {
+        this["page"] = this@map.page
+        this["size"] = this@map.size
     }
 
 fun vectorToBitmap(@DrawableRes id: Int, @ColorInt color: Int, res: Resources): BitmapDescriptor {

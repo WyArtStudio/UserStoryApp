@@ -6,14 +6,13 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.location.Location
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.wahyuhw.userstoryapp.data.network.ResponseCallback
@@ -21,7 +20,10 @@ import com.wahyuhw.userstoryapp.data.network.ResponseResource
 import com.wahyuhw.userstoryapp.data.params.AddStoryParameter
 import com.wahyuhw.userstoryapp.data.response.ApiResponse
 import com.wahyuhw.userstoryapp.databinding.ActivityAddStoryBinding
-import com.wahyuhw.userstoryapp.utils.*
+import com.wahyuhw.userstoryapp.utils.rotateBitmap
+import com.wahyuhw.userstoryapp.utils.showLongToast
+import com.wahyuhw.userstoryapp.utils.showShortToast
+import com.wahyuhw.userstoryapp.utils.uriToFile
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModel
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.CoroutineScope
