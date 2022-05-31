@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">UserStoryApp</string>
+    <string name="lorem">Lorem ipsum dolor sit amet</string>
+    <string name="img_story">Image Story</string>
+    <string name="back">Back</string>
+    <string name="title_bar">User Story</string>
+    <string name="person">Person</string>
+    <string name="dummy_id">dsadgegefac434234dsdsa</string>
+    <string name="dummy_name">Albudi Wibowo</string>
+    <string name="dummy_date">24-05-2022</string>
+    <string name="add">Add</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="clear">Clear</string>
+
+    <string name="appwidget_text" translatable="true">Banner Story</string>
+    <string name="empty_text" translatable="true">Tidak ada story disimpan</string>
+    <string name="add_widget" translatable="true">Tambahkan widget</string>
+    <string name="app_widget_description" translatable="true">Ini adalah deskripsi widget</string>
+    <string name="text_continue_login" translatable="true">Masuk untuk melanjutkan</string>
+    <string name="text_continue_register" translatable="true">Daftar untuk melanjutkan</string>
+    <string name="hint_email" translatable="true">Masukan Email Anda</string>
+    <string name="hint_username" translatable="true">Masukan Username Anda</string>
+    <string name="error_email" translatable="true">Masukan Email Anda dengan benar!</string>
+    <string name="error_password" translatable="true">Masukan Password Anda dengan benar!</string>
+    <string name="error_username" translatable="true">Masukan Nama Anda dengan benar!</string>
+    <string name="error_password_length" translatable="true">Panjang password harus lebih dari 6 karakter</string>
+    <string name="hint_password" translatable="true">Masukan Password Anda</string>
+    <string name="not_registered" translatable="true">Belum punya akun?</string>
+    <string name="not_logged" translatable="true">Sudah punya akun?</string>
+    <string name="register_here" translatable="true"><u>Daftar disini</u></string>
+    <string name="login_here" translatable="true">Masuk disini</string>
+    <string name="login" translatable="true">Masuk</string>
+    <string name="register" translatable="true">Daftar</string>
+    <string name="detail_story" translatable="true">Detail Story</string>
+    <string name="maps_story" translatable="true">Map Story</string>
+    <string name="add_story" translatable="true">Tambah Story</string>
+    <string name="location_story" translatable="true">Masukan lokasi terkini</string>
+    <string name="upload" translatable="true">Upload</string>
+    <string name="camera" translatable="true">Kamera</string>
+    <string name="gallery" translatable="true">Galeri</string>
+    <string name="saved_story" translatable="true">Story Disimpan</string>
+    <string name="profile" translatable="true">Profil</string>
+    <string name="language" translatable="true">Bahasa</string>
+    <string name="change_language" translatable="true">Ubah Bahasa</string>
+    <string name="click_exit" translatable="true">Klik back sekali lagi untuk keluar</string>
+    <string name="bookmark" translatable="true">Penanda</string>
+    <string name="maps" translatable="true">Map</string>
+    <string name="added_favorite" translatable="true">Ditambahkan ke Bookmark!</string>
+    <string name="deleted_favorite" translatable="true">Dihapus dari Bookmark!</string>
+    <string name="dialog_clear" translatable="true">Hapus penanda story?</string>
+    <string name="yes" translatable="true">Ya</string>
+    <string name="no" translatable="true">Tidak</string>
+    <string name="dialog_logout" translatable="true">Keluar akun? (Anda harus login kembali)</string>
+    <string name="logout" translatable="true">Keluar</string>
+    <string name="normal_type" translatable="true">Normal</string>
+    <string name="satellite_type" translatable="true">Satelit</string>
+    <string name="terrain_type" translatable="true">Daerah</string>
+    <string name="hybrid_type" translatable="true">Campuran</string>
+    <string name="retry" translatable="true">Coba lagi</string>
+</resources>
