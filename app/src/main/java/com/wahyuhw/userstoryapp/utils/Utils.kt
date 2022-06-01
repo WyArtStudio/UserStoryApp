@@ -122,9 +122,9 @@ fun LoginParameter.map(): RequestBody =
 fun AddStoryParameter.map(): Map<String, RequestBody> =
     mutableMapOf<String, RequestBody>().apply {
         this["description"] = this@map.description.toRequestBody("text/plain".toMediaType())
-        if (lat != null && lon != null) {
-            this["lat"] = this@map.lat.toString().toRequestBody("text/plain".toMediaType())
-            this["lon"] = this@map.lon.toString().toRequestBody("text/plain".toMediaType())
+        if (location != null) {
+            this["lat"] = this@map.location.latitude.toString().toRequestBody("text/plain".toMediaType())
+            this["lon"] = this@map.location.longitude.toString().toRequestBody("text/plain".toMediaType())
         }
     }
 

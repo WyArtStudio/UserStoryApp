@@ -6,19 +6,14 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.wahyuhw.userstoryapp.data.network.ApiInterface
-import com.wahyuhw.userstoryapp.data.params.StoryPagedParameter
-import com.wahyuhw.userstoryapp.data.prefs.SettingsPreferences
 import com.wahyuhw.userstoryapp.data.response.StoryItem
 import com.wahyuhw.userstoryapp.data.room.StoryDatabase
-import com.wahyuhw.userstoryapp.utils.addBearerToken
-import com.wahyuhw.userstoryapp.utils.map
-import kotlinx.coroutines.flow.first
 
 @OptIn(ExperimentalPagingApi::class)
 class StoryRemoteMediator(
     private val database: StoryDatabase,
     private val apiService: ApiInterface,
-    private val prefs: SettingsPreferences
+    private val token: String
 ) : RemoteMediator<Int, StoryItem>() {
 
     override suspend fun initialize(): InitializeAction {
@@ -48,9 +43,8 @@ class StoryRemoteMediator(
         }
 
         try {
-            val token = prefs.getTokenSetting().first()
-            val storyParameter = StoryPagedParameter(page, state.config.pageSize)
-            val responseData = apiService.getStory(token!!.addBearerToken(), storyParameter.map())
+            val callData = apiService.getStoryPaged(token, page, state.config.pageSize)
+            val responseData = callData.listStory as List<StoryItem>
             val endOfPaginationReached = responseData.isEmpty()
 
             database.withTransaction {
@@ -59,7 +53,7 @@ class StoryRemoteMediator(
                     database.storyDao().clearStory()
                 }
                 val prevKey = if (page == 1) null else page - 1
-                val nextKey = if (endOfPaginationReached) null else page + 1
+                val nextKey = if (endOfPaginationReached == true) null else page + 1
                 val keys = responseData.map {
                     RemoteKeys(id = it.id, prevKey = prevKey, nextKey = nextKey)
                 }

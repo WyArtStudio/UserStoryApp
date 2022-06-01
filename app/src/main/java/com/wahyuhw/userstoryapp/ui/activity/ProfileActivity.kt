@@ -16,7 +16,6 @@ import com.wahyuhw.userstoryapp.viewmodel.MainViewModel
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModelFactory
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class ProfileActivity : AppCompatActivity(), ResponseCallback<UserEntity> {
@@ -33,8 +32,6 @@ class ProfileActivity : AppCompatActivity(), ResponseCallback<UserEntity> {
         setContentView(binding.root)
 
         CoroutineScope(Dispatchers.Main).launch {
-            val token = viewModel.getToken().first()
-            binding.tvToken.text = token
             viewModel.getUser().observe(this@ProfileActivity) { response ->
                 when (response) {
                     is ResponseResource.Error -> onFailed(response.message)
@@ -69,9 +66,8 @@ class ProfileActivity : AppCompatActivity(), ResponseCallback<UserEntity> {
         viewModel.saveToken("")
         viewModel.saveSession(false)
         val intent = Intent(applicationContext, LoginActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
-        finish()
     }
 
     override fun onSuccess(data: UserEntity) {

@@ -24,8 +24,7 @@ internal class StackRemoteViewsFactory(private val mContext: Context) : RemoteVi
     }
 
     override fun onDataSetChanged() {
-        // TODO: Get data from Room Database
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Default).launch {
             val list = bookmarkStoryDao.getListBookmarkStory()
             for (bookmarkStoryEntity in list) {
                 val url = bookmarkStoryEntity.photoUrl

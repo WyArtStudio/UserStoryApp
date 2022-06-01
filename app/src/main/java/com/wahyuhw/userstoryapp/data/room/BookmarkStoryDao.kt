@@ -16,6 +16,6 @@ interface BookmarkStoryDao {
     @Query("SELECT * from bookmark_table ORDER BY name ASC")
     suspend fun getListBookmarkStory(): List<BookmarkStoryEntity>
 
-    @Query("DELETE from story_table")
+    @Query("DELETE from bookmark_table")
     suspend fun clearStory()
 }

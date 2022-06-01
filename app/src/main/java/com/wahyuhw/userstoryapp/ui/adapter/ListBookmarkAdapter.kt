@@ -35,6 +35,7 @@ class ListBookmarkAdapter:
                 itemView.setOnClickListener {
                     val intent = Intent(itemView.context, DetailActivity::class.java)
                     intent.putExtra(DetailActivity.EXTRA_STORY, storyItem)
+                    intent.putExtra(DetailActivity.EXTRA_TYPE, DetailActivity.BOOKMARK)
 
                     val optionsCompat: ActivityOptionsCompat =
                         ActivityOptionsCompat.makeSceneTransitionAnimation(

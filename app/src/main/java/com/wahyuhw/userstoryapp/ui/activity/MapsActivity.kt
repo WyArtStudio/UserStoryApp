@@ -57,23 +57,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, ResponseCallback<L
         loadData()
 
         binding.menuButton.setOnClickListener {
-            setupMenu()
-        }
-    }
+            val popupMenu = PopupMenu(this@MapsActivity, binding.menuButton)
+            popupMenu.menuInflater.inflate(R.menu.pop_menu_maps, popupMenu.menu)
 
-    private fun setupMenu() {
-        val popupMenu = PopupMenu(this@MapsActivity, binding.menuButton)
-        popupMenu.menuInflater.inflate(R.menu.pop_menu_maps, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.order) {
+                    1 -> mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
+                    2 -> mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
+                    3 -> mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
+                    4 -> mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+                }
 
-        popupMenu.setOnMenuItemClickListener { item ->
-            when (item.order) {
-                1 -> mMap.mapType = GoogleMap.MAP_TYPE_NORMAL
-                2 -> mMap.mapType = GoogleMap.MAP_TYPE_SATELLITE
-                3 -> mMap.mapType = GoogleMap.MAP_TYPE_TERRAIN
-                4 -> mMap.mapType = GoogleMap.MAP_TYPE_HYBRID
+                false
             }
-
-            false
+            
+            popupMenu.show()
         }
     }
 

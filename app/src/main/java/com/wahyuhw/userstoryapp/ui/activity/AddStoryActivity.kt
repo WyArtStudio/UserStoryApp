@@ -38,10 +38,9 @@ class AddStoryActivity : AppCompatActivity(), ResponseCallback<ApiResponse> {
     private var _binding: ActivityAddStoryBinding? = null
     private val binding get() = _binding as ActivityAddStoryBinding
     private var getFile: File? = null
-    private var isLocationActivated: Boolean = false
-    private var lat: Float? = null
-    private var long: Float? = null
+    private var location: Location? = null
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var addStoryParameter: AddStoryParameter
 
     private val viewModel: MainViewModel by viewModels {
         MainViewModelFactory(this)
@@ -93,6 +92,16 @@ class AddStoryActivity : AppCompatActivity(), ResponseCallback<ApiResponse> {
             startGallery()
         }
 
+        binding.checkboxLocation.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                getMyLastLocation()
+                showShortToast(this@AddStoryActivity, "Location on!")
+            } else {
+                location = null
+                showShortToast(this@AddStoryActivity, "Location off!")
+            }
+        }
+
         binding.btnUpload.setOnClickListener {
             uploadImage()
         }
@@ -100,8 +109,7 @@ class AddStoryActivity : AppCompatActivity(), ResponseCallback<ApiResponse> {
 
     private val requestPermissionLauncher =
         registerForActivityResult(
-            ActivityResultContracts.RequestMultiplePermissions()
-        ) { permissions ->
+            ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             when {
                 permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
                     // Precise location access granted.
@@ -127,10 +135,9 @@ class AddStoryActivity : AppCompatActivity(), ResponseCallback<ApiResponse> {
     private fun getMyLastLocation() {
         if (checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
             checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)){
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                if (location != null) {
-                    lat = location.latitude.toFloat()
-                    long = location.longitude.toFloat()
+            fusedLocationClient.lastLocation.addOnSuccessListener { getLocation: Location? ->
+                if (getLocation != null) {
+                    location = getLocation
                 } else {
                     Toast.makeText(
                         this@AddStoryActivity,
@@ -170,10 +177,6 @@ class AddStoryActivity : AppCompatActivity(), ResponseCallback<ApiResponse> {
     private fun uploadImage() {
         if (getFile != null) {
             CoroutineScope(Dispatchers.Main).launch {
-                isLocationActivated = binding.checkboxLocation.isChecked
-                if (isLocationActivated) {
-                    getMyLastLocation()
-                }
                 val file = getFile as File
                 val desc : String = binding.edtDescription.text.toString()
                 val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
@@ -181,12 +184,26 @@ class AddStoryActivity : AppCompatActivity(), ResponseCallback<ApiResponse> {
                     "photo",
                     file.name,
                     requestImageFile)
-                val addStoryParameter = AddStoryParameter(desc, file, lat, long)
-                viewModel.addStory(imageMultipart, addStoryParameter).observe(this@AddStoryActivity) {
-                    when (it) {
+
+                showLongToast(this@AddStoryActivity, "Lat: ${location?.latitude}, Lon: ${location?.longitude}")
+
+                addStoryParameter = if (location != null) {
+                    AddStoryParameter(desc, file, location)
+                } else {
+                    AddStoryParameter(desc, file)
+                }
+
+                viewModel.addStory(imageMultipart, addStoryParameter).observe(this@AddStoryActivity) { status ->
+                    when (status) {
                         is ResponseResource.Loading -> onLoading()
-                        is ResponseResource.Success -> it.data?.let { it1 -> onSuccess(it1) }
-                        is ResponseResource.Error -> onFailed(it.message)
+                        is ResponseResource.Success -> {
+                            if (status.data == null) {
+                                onFailed("Data null! Try another image")
+                            } else {
+                                onSuccess(status.data)
+                            }
+                        }
+                        is ResponseResource.Error -> onFailed(status.message)
                     }
                 }
             }

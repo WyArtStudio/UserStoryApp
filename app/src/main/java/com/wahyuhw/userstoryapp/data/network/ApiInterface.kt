@@ -2,7 +2,6 @@ package com.wahyuhw.userstoryapp.data.network
 
 import com.wahyuhw.userstoryapp.data.response.ApiResponse
 import com.wahyuhw.userstoryapp.data.response.LoginResponse
-import com.wahyuhw.userstoryapp.data.response.StoryItem
 import com.wahyuhw.userstoryapp.data.response.StoryResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -26,10 +25,11 @@ interface ApiInterface {
     ): Call<ApiResponse>
 
     @GET("stories")
-    fun getStory(
+    suspend fun getStoryPaged(
         @Header("Authorization") token: String,
-        @QueryMap query: Map<String, Int>
-    ): List<StoryItem>
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): StoryResponse
 
     @GET("stories?location=1")
     fun getLocatedStory(

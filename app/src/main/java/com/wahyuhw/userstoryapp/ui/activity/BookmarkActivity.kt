@@ -49,7 +49,7 @@ class BookmarkActivity : AppCompatActivity(), ResponseCallback<List<BookmarkStor
                     binding.progressBar.visibility = visible
                     viewModel.clearBookmarkStory()
                     binding.progressBar.visibility = gone
-                    loadData()
+                    listStoryAdapter.submitList(emptyList())
                 }
             }.setNegativeButton(resources.getText(R.string.no)) { dialog, _ -> dialog.cancel() }
             builder.create().show()
@@ -77,7 +77,7 @@ class BookmarkActivity : AppCompatActivity(), ResponseCallback<List<BookmarkStor
 
     override fun onRestart() {
         super.onRestart()
-        listStoryAdapter.currentList.clear()
+        listStoryAdapter.submitList(emptyList())
         loadData()
     }
 

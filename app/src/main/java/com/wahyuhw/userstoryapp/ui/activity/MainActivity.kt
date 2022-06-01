@@ -17,6 +17,9 @@ import com.wahyuhw.userstoryapp.ui.adapter.LoadingStateAdapter
 import com.wahyuhw.userstoryapp.utils.showShortToast
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModel
 import com.wahyuhw.userstoryapp.viewmodel.MainViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +37,9 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        loadData()
+        CoroutineScope(Dispatchers.Main).launch {
+            loadData()
+        }
 
         with(binding) {
             btnMaps.setOnClickListener {
@@ -53,7 +58,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadData() {
+    private suspend fun loadData() {
         binding.progressBar.visibility = View.VISIBLE
         binding.rvStory.layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
         binding.rvStory.adapter = adapter.withLoadStateFooter(
@@ -62,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             })
 
         try {
-            viewModel.story.observe(this@MainActivity) { data ->
+            viewModel.getPagedStory().observe(this@MainActivity) { data ->
                 adapter.submitData(lifecycle, data)
             }
             binding.progressBar.visibility = View.GONE

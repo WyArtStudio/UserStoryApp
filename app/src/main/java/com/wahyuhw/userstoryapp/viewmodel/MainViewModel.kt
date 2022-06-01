@@ -15,8 +15,8 @@ import okhttp3.MultipartBody
 
 class MainViewModel(private val repository: MainRepository) : ViewModel() {
 
-    val story: LiveData<PagingData<StoryItem>> =
-        repository.getListPagingStory().cachedIn(viewModelScope)
+    suspend fun getPagedStory(): LiveData<PagingData<StoryItem>> =
+        repository.getListPagedStory().cachedIn(viewModelScope)
 
     fun login(email: String, password: String) = repository.login(email, password)
     

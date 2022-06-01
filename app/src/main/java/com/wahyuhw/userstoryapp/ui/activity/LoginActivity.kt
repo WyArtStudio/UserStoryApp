@@ -69,7 +69,6 @@ class LoginActivity : AppCompatActivity(), ResponseCallback<LoginResponse> {
         val user = loginResult?.userId?.let { id -> loginResult.name?.let { name ->
             UserEntity(id, name) } }
 
-        // TODO: Delete after Successful Testing
         if (token != null) {
             viewModel.saveToken(token)
         } else {
@@ -85,7 +84,6 @@ class LoginActivity : AppCompatActivity(), ResponseCallback<LoginResponse> {
         val intent = Intent(applicationContext, MainActivity::class.java)
             .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
-        finish()
     }
 
     override fun onLoading() {

@@ -51,8 +51,9 @@ class MainRepository(private val database: StoryDatabase, private val retrofit: 
     suspend fun addStory(imageMultipart: MultipartBody.Part, addStoryParams: AddStoryParameter): LiveData<ResponseResource<ApiResponse>> {
         val apiResponse = MutableLiveData<ResponseResource<ApiResponse>>()
         apiResponse.postValue(ResponseResource.Loading())
-        val token = getToken().first()
-        retrofit.addStory(token!!.addBearerToken(), addStoryParams.map(), imageMultipart).enqueue(object: Callback<ApiResponse> {
+        val token = getToken().first()?.addBearerToken()
+
+        retrofit.addStory(token!!, addStoryParams.map(), imageMultipart).enqueue(object: Callback<ApiResponse> {
             override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
                 val message = response.body()
                 apiResponse.postValue(ResponseResource.Success(message))
@@ -86,12 +87,13 @@ class MainRepository(private val database: StoryDatabase, private val retrofit: 
         return user
     }
 
-     fun getListPagingStory(): LiveData<PagingData<StoryItem>> {
-        @OptIn(ExperimentalPagingApi::class)
+    @OptIn(ExperimentalPagingApi::class)
+    suspend fun getListPagedStory(): LiveData<PagingData<StoryItem>> {
+        val token = getToken().first()?.addBearerToken()
         return Pager(
             config = PagingConfig(
                 pageSize = 5),
-            remoteMediator = StoryRemoteMediator(database, retrofit, prefs),
+            remoteMediator = StoryRemoteMediator(database, retrofit, token!!),
             pagingSourceFactory = {
                 database.storyDao().getAllStory()
             }).liveData

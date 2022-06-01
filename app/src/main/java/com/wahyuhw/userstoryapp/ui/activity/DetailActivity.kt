@@ -32,10 +32,15 @@ class DetailActivity : AppCompatActivity(), ResponseCallback<BookmarkStoryEntity
         _binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val detailStory = intent.getParcelableExtra<StoryItem>(EXTRA_STORY)!!
+        val type = intent.getStringExtra(EXTRA_TYPE)
 
-        with(detailStory) {
-            story = BookmarkStoryEntity(id, photoUrl, createdAt, name, description, lon, lat, isBookmark)
+        if (type == BOOKMARK) {
+            story = intent.getParcelableExtra<BookmarkStoryEntity>(EXTRA_STORY)!!
+        } else {
+            val parcel = intent.getParcelableExtra<StoryItem>(EXTRA_STORY)!!
+            with(parcel) {
+                story = BookmarkStoryEntity(id, photoUrl, createdAt, name, description, lon, lat, isBookmark)
+            }
         }
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -108,5 +113,8 @@ class DetailActivity : AppCompatActivity(), ResponseCallback<BookmarkStoryEntity
 
     companion object {
         const val EXTRA_STORY = "extra_story"
+        const val EXTRA_TYPE = "extra_type"
+        const val BOOKMARK = "Bookmark"
+        const val STORY = "Story"
     }
 }
